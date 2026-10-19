@@ -12,6 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Supabase JS Client SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- SheetJS Library untuk Export Excel .xlsx Rapi -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -194,7 +196,7 @@
                         <i data-lucide="key-round" class="w-4 h-4 text-amber-400"></i> Ubah Password Admin
                     </button>
                     <button onclick="exportCSV()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition flex items-center gap-2 shadow-lg shadow-emerald-950/50">
-                        <i data-lucide="download" class="w-4 h-4"></i> Export Excel/CSV
+                        <i data-lucide="download" class="w-4 h-4"></i> Export Excel (.xlsx)
                     </button>
                     <button onclick="clearAllResponses()" class="px-4 py-2.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-bold rounded-xl transition flex items-center gap-2">
                         <i data-lucide="trash-2" class="w-4 h-4"></i> Reset Data
@@ -240,7 +242,6 @@
 
             <!-- Table Responses -->
             <div class="bg-slate-900/90 rounded-2xl border border-slate-800 overflow-hidden">
-                <!-- Header Table + Filter Dropdown -->
                 <div class="p-4 border-b border-slate-800 font-bold text-white text-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
                     <div class="flex items-center gap-3">
                         <span>Rekapitulasi Nilai & Respon</span>
@@ -615,19 +616,42 @@
             });
         }
 
+        // Fungsi Export Excel Profesional Menggunakan SheetJS (.xlsx)
         function exportCSV() {
             if (filteredResponses.length === 0) return alert("Belum ada data respon untuk diexport!");
-            let csv = "Waktu Submit,Nama Lengkap,NPM,Kelas,Nilai Total\n";
-            filteredResponses.forEach(r => {
-                const d = new Date(r.created_at).toLocaleString("id-ID");
-                csv += `"${d}","${r.name}","${r.npm}","${r.class}",${r.score}\n`;
-            });
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const a = document.createElement('a');
+
             const selectedClass = document.getElementById("filterClassSelect").value;
-            a.href = URL.createObjectURL(blob);
-            a.download = `Rekap_Pretest_Linux_Judul1_${selectedClass}.csv`;
-            a.click();
+
+            // Mapping data agar rapi di Excel
+            const excelData = filteredResponses.map((r, idx) => ({
+                "No": idx + 1,
+                "Waktu Submit": new Date(r.created_at).toLocaleString("id-ID"),
+                "Nama Praktikan": r.name,
+                "NPM": String(r.npm), // Pakai String agar format NPM aman tidak berubah jadi angka ilmiah
+                "Kelas": r.class,
+                "Nilai Akhir": r.score,
+                "Status": r.score >= 70 ? "LULUS" : "REMIDIAL"
+            }));
+
+            // Buat Workbook & Worksheet
+            const worksheet = XLSX.utils.json_to_sheet(excelData);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Rekap Pretest");
+
+            // Lebar kolom otomatis agar tidak terpotong
+            worksheet["!cols"] = [
+                { wch: 6 },  // No
+                { wch: 22 }, // Waktu Submit
+                { wch: 30 }, // Nama Praktikan
+                { wch: 16 }, // NPM
+                { wch: 12 }, // Kelas
+                { wch: 12 }, // Nilai Akhir
+                { wch: 12 }  // Status
+            ];
+
+            // Simpan File Excel .xlsx
+            const filename = `Rekap_Pretest_PSO_Judul1_${selectedClass.replace(/\s+/g, '_')}.xlsx`;
+            XLSX.writeFile(workbook, filename);
         }
 
         async function clearAllResponses() {
