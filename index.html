@@ -105,6 +105,8 @@
                                 <option value="" disabled selected>-- Pilih Modul / Judul Praktikum --</option>
                                 <option value="judul1">Judul 1: Direktori dan Perintah Dasar Linux</option>
                                 <option value="judul2">Judul 2: Input & Output (I/O) dan Manajemen Proses</option>
+                                <option value="judul3">Judul 3: Manajemen User, Group, dan Hak Akses</option>
+                                <option value="judul4">Judul 4: Shell Scripting Dasar & Monitoring Sistem</option>
                             </select>
                         </div>
 
@@ -205,6 +207,8 @@
                     <select id="adminModuleSelect" onchange="onAdminModuleChange()" class="px-3 py-2.5 bg-slate-950 border border-indigo-500/40 text-xs text-indigo-300 font-bold rounded-xl outline-none cursor-pointer">
                         <option value="judul1">Modul: Judul 1 (Direktori Linux)</option>
                         <option value="judul2">Modul: Judul 2 (I/O & Manajemen Proses)</option>
+                        <option value="judul3">Modul: Judul 3 (Manajemen User & Akses)</option>
+                        <option value="judul4">Modul: Judul 4 (Shell Scripting & Monitoring)</option>
                     </select>
                     <button onclick="fetchSupabaseResponses()" class="px-3.5 py-2.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
                         <i data-lucide="refresh-cw" class="w-4 h-4"></i> Refresh
@@ -348,7 +352,7 @@
         const SUPABASE_ANON_KEY = "sb_publishable_FlC3dc14UCCj7m6WzEXxRg_XxjHy9bp";
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // ==================== KUMPULAN SOAL JUDUL 1 & JUDUL 2 ====================
+        // ==================== KUMPULAN SOAL JUDUL 1, 2, 3, & 4 ====================
         const questionsJudul1 = [
             { id: 1, pts: 7, text: "Saat melakukan troubleshooting pada kernel panic di tahap awal inisiasi sistem, file krusial seperti vmlinuz-, initramfs-, serta peta konfigurasi bootloader umumnya dimuat di bawah hirarki direktori mana?", options: ["/lib", "/etc", "/bin", "/boot"], answer: "/boot" },
             { id: 2, pts: 7, text: "Direktori manakah yang menyimpan seluruh file konfigurasi sistem secara global dan script inisiasi pada sistem Linux?", options: ["/etc", "/var", "/opt", "/usr"], answer: "/etc" },
@@ -367,7 +371,6 @@
             { id: 15, pts: 6, text: "Perintah untuk melihat dokumentasi manual resmi dari sebuah perintah CLI di Linux adalah...", options: ["man", "help", "info", "guide"], answer: "man" }
         ];
 
-        // 100% PERSIS DARI GOOGLE FORM JUDUL 2 (15 Soal @10 Poin)
         const questionsJudul2 = [
             { id: 1, pts: 10, text: "Apa fungsi utama Input/Output (I/O) pada sistem operasi?", options: ["Mengatur tampilan desktop", "Melakukan pertukaran data antara sistem komputer dan perangkat atau proses lain", "Menghapus seluruh proses yang berjalan", "Mengatur kapasitas RAM"], answer: "Melakukan pertukaran data antara sistem komputer dan perangkat atau proses lain" },
             { id: 2, pts: 10, text: "Unit eksekusi yang dibuat oleh kernel ketika sebuah perintah dijalankan disebut ....", options: ["File", "Direktori", "Proses", "Operator"], answer: "Proses" },
@@ -380,17 +383,53 @@
             { id: 9, pts: 10, text: "Apa fungsi operator > pada Linux?", options: ["Mengurutkan data", "Mengarahkan output ke file dan menimpa isi sebelumnya", "Menggabungkan dua perintah", "Menghentikan proses"], answer: "Mengarahkan output ke file dan menimpa isi sebelumnya" },
             { id: 10, pts: 10, text: "Operator yang digunakan untuk menambahkan output ke akhir file tanpa menimpa isi sebelumnya adalah ....", options: ["<", ">", ">>", "2>"], answer: ">>" },
             { id: 11, pts: 10, text: "Perhatikan perintah berikut:\ncat < coba.txt\n\nFungsi operator < pada perintah tersebut adalah ....", options: ["Mengambil input dari file coba.txt", "Menambahkan teks ke file", "Menghapus file coba.txt", "Mengurutkan isi file"], answer: "Mengambil input dari file coba.txt" },
-            { id: 12, pts: 10, text: "Apa fungsi operator pipeline (|) pada Linux?", options: ["Menghentikan proses secara paksa", "Menyimpan output ke file baru", "Mengganti nama file", "Menghubungkan output suatu perintah menjadi input perintah berikutnya"], answer: "Menghubungkan output suatu perintah menjadi input perintah berikutnya" },
+            { id: 12, pts: 10, text: "Apa fungsi operator pipeline (|) pada Linux?", options: ["Menghentikan proses secara paksa", "Menyimpan output ke file baru", "Mengganti nama file", "Menhubungkan output suatu perintah menjadi input perintah berikutnya"], answer: "Menhubungkan output suatu perintah menjadi input perintah berikutnya" },
             { id: 13, pts: 10, text: "Perhatikan perintah berikut:\ncat id.txt | sort\n\nApa fungsi perintah sort pada rangkaian tersebut?", options: ["Menghapus isi file", "Mengurutkan baris teks", "Menghitung jumlah karakter", "Menampilkan tipe file"], answer: "Mengurutkan baris teks" },
             { id: 14, pts: 10, text: "Perhatikan perintah berikut:\ncat data.txt | grep \"an\"\n\nFungsi grep \"an\" adalah ....", options: ["Menghitung seluruh baris pada file", "Mengurutkan teks secara terbalik", "Menampilkan baris yang mengandung pola teks an", "Mengubah isi file menjadi huruf kapital"], answer: "Menampilkan baris yang mengandung pola teks an" },
             { id: 15, pts: 10, text: "Apa fungsi perintah berikut?\ncat id.txt | sort | wc -l", options: ["Menghitung jumlah baris pada hasil pemrosesan", "Menghitung jumlah file dalam direktori", "Menghentikan seluruh proses", "Menghitung jumlah karakter setiap kata"], answer: "Menghitung jumlah baris pada hasil pemrosesan" }
         ];
 
+        const questionsJudul3 = [
+            { id: 1, pts: 10, text: "Apa yang dimaksud dengan user dalam sistem operasi Linux?", options: ["Kumpulan file yang tersimpan dalam sistem", "Individu atau entitas yang dapat mengakses sistem dan menjalankan perintah", "Program untuk mengatur jaringan komputer", "Tempat penyimpanan data pengguna"], answer: "Individu atau entitas yang dapat mengakses sistem dan menjalankan perintah" },
+            { id: 2, pts: 10, text: "Perintah Linux yang digunakan untuk membuat akun pengguna baru adalah ....", options: ["userdel", "usermod", "useradd", "passwd"], answer: "useradd" },
+            { id: 3, pts: 10, text: "Perintah yang digunakan untuk menghapus akun pengguna dalam Linux adalah ....", options: ["groupdel", "userdel", "useradd", "chown"], answer: "userdel" },
+            { id: 4, pts: 10, text: "Apa fungsi utama dari grup (group) dalam sistem Linux?", options: ["Menghapus seluruh akun pengguna", "Mengatur tampilan desktop pengguna", "Mengelompokkan pengguna agar dapat memiliki hak akses yang sama", "Mengubah password seluruh pengguna secara otomatis"], answer: "Mengelompokkan pengguna agar dapat memiliki hak akses yang sama" },
+            { id: 5, pts: 10, text: "Perintah yang digunakan untuk membuat grup baru dalam Linux adalah ....", options: ["groupadd", "groupdel", "groupmod", "groups"], answer: "groupadd" },
+            { id: 6, pts: 10, text: "Perhatikan perintah berikut!\nuseradd -m -G developer Programmer\nApa fungsi dari perintah tersebut?", options: ["Menghapus pengguna Programmer dari grup developer", "Membuat pengguna Programmer dan memasukkannya ke grup developer", "Membuat grup baru bernama Programmer", "Mengubah nama grup developer menjadi Programmer"], answer: "Membuat pengguna Programmer dan memasukkannya ke grup developer" },
+            { id: 7, pts: 10, text: "Perintah yang digunakan untuk melihat informasi grup yang dimiliki oleh seorang pengguna adalah ....", options: ["passwd", "chmod", "groups", "chgrp"], answer: "groups" },
+            { id: 8, pts: 10, text: "Perintah Linux yang digunakan untuk mengubah masa berlaku password seorang pengguna adalah ....", options: ["chage", "chfn", "chsh", "chpass"], answer: "chage" },
+            { id: 9, pts: 10, text: "Angka yang digunakan untuk menunjukkan izin read, write, dan execute secara berurutan adalah ....", options: ["1, 2, dan 4", "2, 1, dan 4", "4, 2, dan 1", "4, 1, dan 2"], answer: "4, 2, dan 1" },
+            { id: 10, pts: 10, text: "Setiap file atau direktori di Linux memiliki tiga kelompok pengaturan hak akses, yaitu ....", options: ["Admin, User, dan System", "Owner, Group, dan Others", "Read, Write, dan Execute", "Root, Developer, dan Operator"], answer: "Owner, Group, dan Others" },
+            { id: 11, pts: 10, text: "Perintah chmod 755 file.txt akan memberikan hak akses ....", options: ["Pemilik dapat membaca dan menulis, sedangkan grup dan lainnya hanya membaca", "Pemilik dapat membaca, menulis, dan menjalankan, sedangkan grup dan lainnya dapat membaca dan menjalankan", "Semua pengguna dapat membaca, menulis, dan menjalankan", "Pemilik hanya dapat membaca, sedangkan grup dan lainnya tidak memiliki akses"], answer: "Pemilik dapat membaca, menulis, dan menjalankan, sedangkan grup dan lainnya dapat membaca dan menjalankan" },
+            { id: 12, pts: 10, text: "Apa fungsi dari perintah berikut?\nchmod -w file.txt", options: ["Menambahkan izin menulis pada file", "Menghapus izin membaca pada file", "Menghapus izin menulis pada file", "Mengubah pemilik file"], answer: "Menghapus izin menulis pada file" },
+            { id: 13, pts: 10, text: "Perintah yang digunakan untuk mengubah pemilik (owner) suatu file atau direktori adalah ....", options: ["chown", "chgrp", "chmod", "groupmod"], answer: "chown" },
+            { id: 14, pts: 10, text: "Perhatikan perintah berikut!\nchmod 750 /home/Programmer\nBerdasarkan angka tersebut, hak akses yang diberikan adalah ....", options: ["Pemilik memiliki akses penuh, grup dapat membaca dan menjalankan, sedangkan lainnya tidak memiliki akses", "Pemilik dan grup memiliki akses penuh, sedangkan lainnya hanya dapat membaca", "Pemilik hanya dapat membaca, grup dapat menulis, sedangkan lainnya dapat menjalankan", "Semua pengguna memiliki akses membaca dan menjalankan"], answer: "Pemilik memiliki akses penuh, grup dapat membaca dan menjalankan, sedangkan lainnya tidak memiliki akses" },
+            { id: 15, pts: 10, text: "Dalam pengaturan hak akses file backup.sql yang berisi data database rahasia, pemilik diberikan izin membaca dan menulis, sedangkan grup dan pengguna lainnya tidak diberikan izin apa pun. Perintah yang tepat untuk mengatur hak akses tersebut adalah ....", options: ["chmod 755 backup.sql", "chmod 644 backup.sql", "chmod 600 backup.sql", "chmod 664 backup.sql"], answer: "chmod 600 backup.sql" }
+        ];
+
+        const questionsJudul4 = [
+            { id: 1, pts: 10, text: "Apa yang dimaksud dengan shell pada sistem operasi Linux?", options: ["Perangkat keras untuk menyimpan data", "Antarmuka antara pengguna dan kernel sistem operasi", "Program untuk mengedit gambar", "Sistem untuk mengelola jaringan internet"], answer: "Antarmuka antara pengguna dan kernel sistem operasi" },
+            { id: 2, pts: 10, text: "Apa fungsi utama kernel dalam sistem operasi Linux?", options: ["Membuat dokumen teks", "Menjalankan aplikasi desain", "Mengelola sumber daya sistem seperti CPU, memori, dan perangkat keras", "Mengubah tampilan terminal"], answer: "Mengelola sumber daya sistem seperti CPU, memori, dan perangkat keras" },
+            { id: 3, pts: 10, text: "Manakah jenis shell yang paling umum digunakan pada distribusi Linux modern seperti Ubuntu dan Debian?", options: ["C Shell", "Korn Shell", "Z Shell", "Bash"], answer: "Bash" },
+            { id: 4, pts: 10, text: "Apa yang dimaksud dengan shell scripting?", options: ["Teknik menuliskan serangkaian perintah shell dalam sebuah file agar dapat dijalankan secara otomatis", "Teknik memperbaiki komponen perangkat keras komputer", "Proses menginstal sistem operasi Linux", "Teknik membuat desain antarmuka website"], answer: "Teknik menuliskan serangkaian perintah shell dalam sebuah file agar dapat dijalankan secara otomatis" },
+            { id: 5, pts: 10, text: "Perintah apa yang digunakan untuk membuat atau mengedit file shell script menggunakan editor Nano?", options: ["chmod", "nano", "crontab", "grep"], answer: "nano" },
+            { id: 6, pts: 10, text: "Apa fungsi perintah chmod +x percobaan4.1?", options: ["Menghapus file percobaan4.1", "Menampilkan isi file percobaan4.1", "Memberikan izin eksekusi pada file percobaan4.1", "Mengganti nama file percobaan4.1"], answer: "Memberikan izin eksekusi pada file percobaan4.1" },
+            { id: 7, pts: 10, text: "Apa fungsi tanda #!/bin/bash pada baris pertama sebuah shell script?", options: ["Menandai akhir program", "Menampilkan pesan ke terminal", "Menghapus variabel program", "Menentukan interpreter bash yang digunakan untuk menjalankan script"], answer: "Menentukan interpreter bash yang digunakan untuk menjalankan script" },
+            { id: 8, pts: 10, text: "Perhatikan perintah berikut.\necho \"Hello $USER\"\nApa fungsi variabel $USER pada perintah tersebut?", options: ["Menampilkan nama pengguna yang sedang login", "Menampilkan nama komputer", "Menampilkan alamat IP komputer", "Menampilkan tanggal saat ini"], answer: "Menampilkan nama pengguna yang sedang login" },
+            { id: 9, pts: 10, text: "Pada percobaan penggunaan variabel dan fungsi read, apa fungsi perintah berikut?\nread namaku", options: ["Menghapus variabel namaku", "Meminta pengguna memasukkan data yang disimpan ke variabel namaku", "Menampilkan isi variabel namaku", "Mengubah nama file menjadi namaku"], answer: "Meminta pengguna memasukkan data yang disimpan ke variabel namaku" },
+            { id: 10, pts: 10, text: "Perhatikan kode berikut.\nvsatu='Mahasiswa Universitas Lampung'\necho \"$vsatu\"\nApa keluaran dari kode tersebut?", options: ["vsatu", "$vsatu", "Mahasiswa Universitas Lampung", "echo vsatu"], answer: "Mahasiswa Universitas Lampung" },
+            { id: 11, pts: 10, text: "Pada script perhitungan umur, apa fungsi perintah berikut?\ntahun_sekarang=$(date +\"%Y\")", options: ["Mengatur tanggal komputer menjadi tahun baru", "Menghitung jumlah bulan dalam setahun", "Memasukkan tahun lahir pengguna ke variabel", "Mengambil tahun saat ini dan menyimpannya ke variabel tahun_sekarang"], answer: "Mengambil tahun saat ini dan menyimpannya ke variabel tahun_sekarang" },
+            { id: 12, pts: 10, text: "Perhatikan kode berikut.\numur=$((tahun_sekarang - tahun_lahir))\nApa fungsi kode tersebut?", options: ["Menghitung umur berdasarkan selisih tahun sekarang dan tahun lahir", "Mengubah tahun lahir menjadi teks", "Menampilkan tanggal lahir pengguna", "Menghitung jumlah hari dalam satu tahun"], answer: "Menghitung umur berdasarkan selisih tahun sekarang dan tahun lahir" },
+            { id: 13, pts: 10, text: "Pada script performa.sh, apa fungsi perintah free -h?", options: ["Memeriksa kecepatan koneksi internet", "Menampilkan informasi penggunaan memori dalam format yang mudah dibaca", "Menghapus memori yang tidak digunakan", "Menampilkan daftar file dalam direktori"], answer: "Menampilkan informasi penggunaan memori dalam format yang mudah dibaca" },
+            { id: 14, pts: 10, text: "Apa fungsi perintah df -h dalam Linux?", options: ["Menampilkan daftar pengguna yang aktif", "Memeriksa penggunaan CPU secara langsung", "Menampilkan penggunaan ruang disk dengan satuan yang mudah dibaca", "Menjalankan script secara otomatis setiap dua menit"], answer: "Menampilkan penggunaan ruang disk dengan satuan yang mudah dibaca" },
+            { id: 15, pts: 10, text: "Perhatikan konfigurasi crontab berikut.\n*/2 * * * * ~/skrip_cron.sh\nApa arti konfigurasi tersebut?", options: ["Menjalankan script setiap dua jam", "Menjalankan script setiap hari pada pukul 02.00", "Menjalankan script satu kali setiap bulan", "Menjalankan script setiap dua menit"], answer: "Menjalankan script setiap dua menit" }
+        ];
+
         let isAdminLoggedIn = false;
         let currentStudent = {};
-        let activeModule = "judul1"; // default judul 1
+        let activeModule = "judul1";
         let activeQuestions = questionsJudul1;
-        let activeTable = "pretest_responses"; // default table judul 1
+        let activeTable = "pretest_responses";
         let cachedResponses = [];
         let filteredResponses = [];
         let scoreChart = null;
@@ -411,6 +450,14 @@
                 activeQuestions = questionsJudul2;
                 activeTable = "pretest_responses_judul2";
                 document.getElementById("displayModuleTitle").textContent = "Judul 2: Input & Output";
+            } else if (activeModule === "judul3") {
+                activeQuestions = questionsJudul3;
+                activeTable = "pretest_responses_judul3";
+                document.getElementById("displayModuleTitle").textContent = "Judul 3: Manajemen User & Hak Akses";
+            } else if (activeModule === "judul4") {
+                activeQuestions = questionsJudul4;
+                activeTable = "pretest_responses_judul4";
+                document.getElementById("displayModuleTitle").textContent = "Judul 4: Shell Scripting & Monitoring";
             } else {
                 activeQuestions = questionsJudul1;
                 activeTable = "pretest_responses";
@@ -466,7 +513,6 @@
             document.getElementById("progressText").textContent = `${answered} / ${activeQuestions.length} Terjawab`;
         }
 
-        // Submit Pretest ke Supabase
         async function submitPretest(e) {
             e.preventDefault();
 
@@ -481,9 +527,13 @@
                 if (selected && selected.value === q.answer) rawScore += q.pts;
             });
 
-            // Normalisasi skala nilai ke 100 (khusus Judul 2 karena bobot totalnya 150)
+            // Normalisasi skala nilai ke 100
             let finalScore = rawScore;
-            if (activeModule === "judul2") {
+            if (activeModule === "judul1") {
+                finalScore = Math.round((rawScore / 100) * 100);
+            } else if (activeModule === "judul2") {
+                finalScore = Math.round((rawScore / 150) * 100);
+            } else if (activeModule === "judul3" || activeModule === "judul4") {
                 finalScore = Math.round((rawScore / 150) * 100);
             }
 
@@ -512,18 +562,20 @@
             }
         }
 
-        // Admin: Ganti Modul di Dashboard
         function onAdminModuleChange() {
             const mod = document.getElementById("adminModuleSelect").value;
             if (mod === "judul2") {
                 activeTable = "pretest_responses_judul2";
+            } else if (mod === "judul3") {
+                activeTable = "pretest_responses_judul3";
+            } else if (mod === "judul4") {
+                activeTable = "pretest_responses_judul4";
             } else {
                 activeTable = "pretest_responses";
             }
             fetchSupabaseResponses();
         }
 
-        // Fetch Data from Supabase Database
         async function fetchSupabaseResponses() {
             try {
                 const { data, error } = await _supabase
@@ -682,18 +734,20 @@
             });
         }
 
-        // Fungsi Export Excel Profesional Menggunakan SheetJS (.xlsx)
         function exportExcel() {
             if (filteredResponses.length === 0) return alert("Belum ada data respon untuk diexport!");
 
             const selectedClass = document.getElementById("filterClassSelect").value;
-            const currentModLabel = activeTable === "pretest_responses_judul2" ? "Judul_2" : "Judul_1";
+            let currentModLabel = "Judul_1";
+            if (activeTable === "pretest_responses_judul2") currentModLabel = "Judul_2";
+            else if (activeTable === "pretest_responses_judul3") currentModLabel = "Judul_3";
+            else if (activeTable === "pretest_responses_judul4") currentModLabel = "Judul_4";
 
             const excelData = filteredResponses.map((r, idx) => ({
                 "No": idx + 1,
                 "Waktu Submit": new Date(r.created_at).toLocaleString("id-ID"),
                 "Nama Praktikan": r.name,
-                "NPM": String(r.npm), // Pakai String agar NPM aman tidak berubah jadi angka ilmiah
+                "NPM": String(r.npm),
                 "Kelas": r.class,
                 "Nilai Akhir": r.score,
                 "Status": r.score >= 70 ? "LULUS" : "REMIDIAL"
@@ -704,13 +758,13 @@
             XLSX.utils.book_append_sheet(workbook, worksheet, "Rekap Pretest");
 
             worksheet["!cols"] = [
-                { wch: 6 },  // No
-                { wch: 22 }, // Waktu Submit
-                { wch: 30 }, // Nama Praktikan
-                { wch: 16 }, // NPM
-                { wch: 12 }, // Kelas
-                { wch: 12 }, // Nilai Akhir
-                { wch: 12 }  // Status
+                { wch: 6 },
+                { wch: 22 },
+                { wch: 30 },
+                { wch: 16 },
+                { wch: 12 },
+                { wch: 12 },
+                { wch: 12 }
             ];
 
             const filename = `Rekap_Pretest_${currentModLabel}_${selectedClass.replace(/\s+/g, '_')}.xlsx`;
