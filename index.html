@@ -107,6 +107,7 @@
                                 <option value="judul2">Judul 2: Input & Output (I/O) dan Manajemen Proses</option>
                                 <option value="judul3">Judul 3: Manajemen User, Group, dan Hak Akses</option>
                                 <option value="judul4">Judul 4: Shell Scripting Dasar & Monitoring Sistem</option>
+                                <option value="judul5">Judul 5: Analisis dan Manajemen File</option>
                             </select>
                         </div>
 
@@ -209,6 +210,7 @@
                         <option value="judul2">Modul: Judul 2 (I/O & Manajemen Proses)</option>
                         <option value="judul3">Modul: Judul 3 (Manajemen User & Akses)</option>
                         <option value="judul4">Modul: Judul 4 (Shell Scripting & Monitoring)</option>
+                        <option value="judul5">Modul: Judul 5 (Analisis & Manajemen File)</option>
                     </select>
                     <button onclick="fetchSupabaseResponses()" class="px-3.5 py-2.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
                         <i data-lucide="refresh-cw" class="w-4 h-4"></i> Refresh
@@ -352,7 +354,7 @@
         const SUPABASE_ANON_KEY = "sb_publishable_FlC3dc14UCCj7m6WzEXxRg_XxjHy9bp";
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // ==================== KUMPULAN SOAL JUDUL 1, 2, 3, & 4 ====================
+        // ==================== KUMPULAN SOAL JUDUL 1, 2, 3, 4, & 5 ====================
         const questionsJudul1 = [
             { id: 1, pts: 7, text: "Saat melakukan troubleshooting pada kernel panic di tahap awal inisiasi sistem, file krusial seperti vmlinuz-, initramfs-, serta peta konfigurasi bootloader umumnya dimuat di bawah hirarki direktori mana?", options: ["/lib", "/etc", "/bin", "/boot"], answer: "/boot" },
             { id: 2, pts: 7, text: "Direktori manakah yang menyimpan seluruh file konfigurasi sistem secara global dan script inisiasi pada sistem Linux?", options: ["/etc", "/var", "/opt", "/usr"], answer: "/etc" },
@@ -425,6 +427,24 @@
             { id: 15, pts: 10, text: "Perhatikan konfigurasi crontab berikut.\n*/2 * * * * ~/skrip_cron.sh\nApa arti konfigurasi tersebut?", options: ["Menjalankan script setiap dua jam", "Menjalankan script setiap hari pada pukul 02.00", "Menjalankan script satu kali setiap bulan", "Menjalankan script setiap dua menit"], answer: "Menjalankan script setiap dua menit" }
         ];
 
+        const questionsJudul5 = [
+            { id: 1, pts: 10, text: "Jika ingin mengetahui tipe sebenarnya dari sebuah file berdasarkan isi atau magic number, perintah yang digunakan adalah", options: ["stat challl.bin", "ls -lh chall1.bin", "file chall1.bin", "strings challl.bin"], answer: "file chall1.bin" },
+            { id: 2, pts: 10, text: "Apa perbedaan fungsi perintah file dan stat pada Linux?", options: ["file menampilkan ukuran file, sedangkan stat mengubah tipe file.", "file mendeteksi tipe konten berdasarkan magic number, sedangkan stat menampilkan metadata file.", "file menampilkan permission, sedangkan stat membaca isi file.", "Keduanya memiliki fungsi yang sama."], answer: "file mendeteksi tipe konten berdasarkan magic number, sedangkan stat menampilkan metadata file." },
+            { id: 3, pts: 10, text: "Jika ingin mengambil potongan teks yang masih dapat dibaca dari sebuah file biner, perintah yang tepat adalah", options: ["hexdump", "strings", "cmp", "stat"], answer: "strings" },
+            { id: 4, pts: 10, text: "Jika ingin membandingkan dua file untuk mengetahui perbedaan pada tingkat byte, perintah yang digunakan adalah", options: ["xxd", "od", "hexdump", "cmp"], answer: "cmp" },
+            { id: 5, pts: 10, text: "Perhatikan perintah berikut:\nxxd -r -p chall2.hex > chall2.txt\n\nApa yang terjadi jika opsi -r dihilangkan?", options: ["File tetap dikonversi kembali menjadi data asli.", "Proses pembalikan hexdump tidak dilakukan sehingga hasilnya bukan konversi kembali ke data asli.", "File langsung dikompresi menjadi ZIP.", "Isi file dihapus seluruhnya."], answer: "Proses pembalikan hexdump tidak dilakukan sehingga hasilnya bukan konversi kembali ke data asli." },
+            { id: 6, pts: 10, text: "Mengapa Base64 tidak dapat dianggap sebagai metode enkripsi yang aman?", options: ["Karena Base64 hanya dapat digunakan pada file teks.", "Karena Base64 tidak dapat dikembalikan ke bentuk semula.", "Karena Base64 hanya mengubah representasi data dan tidak menggunakan kunci rahasia untuk melindungi informasi.", "Karena Base64 selalu memperbesar ukuran file hingga dua kali lipat."], answer: "Karena Base64 hanya mengubah representasi data dan tidak menggunakan kunci rahasia untuk melindungi informasi." },
+            { id: 7, pts: 10, text: "Jika huruf Z dienkripsi menggunakan Caesar Cipher dengan pergeseran 3 posisi, hasilnya adalah", options: ["Z", "A", "C", "D"], answer: "C" },
+            { id: 8, pts: 10, text: "Apa yang membedakan ROT13 dengan Caesar Cipher biasa?", options: ["ROT13 menggunakan kunci publik dan pribadi.", "ROT13 merupakan bentuk khusus Caesar Cipher yang menggunakan pergeseran sebanyak 13 posisi.", "ROT13 menggunakan operasi XOR pada setiap karakter.", "ROT13 mengubah karakter menjadi kode heksadesimal."], answer: "ROT13 merupakan bentuk khusus Caesar Cipher yang menggunakan pergeseran sebanyak 13 posisi." },
+            { id: 9, pts: 10, text: "Mengapa metode LSB pada steganografi menggunakan bit paling rendah untuk menyisipkan pesan?", options: ["Karena bit paling rendah menentukan seluruh warna gambar.", "Karena perubahan pada bit paling rendah cenderung menghasilkan perubahan nilai piksel yang kecil sehingga tidak mudah terlihat.", "Karena bit paling rendah menyimpan nama file gambar.", "Karena bit paling rendah dapat menghapus metadata gambar."], answer: "Karena perubahan pada bit paling rendah cenderung menghasilkan perubahan nilai piksel yang kecil sehingga tidak mudah terlihat." },
+            { id: 10, pts: 10, text: "Jika sebuah file dienkripsi menggunakan AES-256 dan ingin dibuka kembali, hal yang harus dimiliki adalah", options: ["Nama file asli saja.", "Algoritma Base64.", "Kunci atau kata sandi yang sesuai untuk melakukan dekripsi.", "Ekstensi file .txt."], answer: "Kunci atau kata sandi yang sesuai untuk melakukan dekripsi." },
+            { id: 11, pts: 10, text: "Apa perbedaan utama antara AES dan RSA berdasarkan metode penggunaan kuncinya?", options: ["AES menggunakan dua kunci, sedangkan RSA menggunakan satu kunci.", "AES merupakan enkripsi simetris, sedangkan RSA merupakan metode kriptografi asimetris.", "AES merupakan encoding, sedangkan RSA merupakan hashing.", "AES hanya digunakan untuk gambar, sedangkan RSA hanya untuk teks."], answer: "AES merupakan enkripsi simetris, sedangkan RSA merupakan metode kriptografi asimetris." },
+            { id: 12, pts: 10, text: "Perhatikan perintah berikut:\nopenssl enc -d -aes-256-cbc -pbkdf2 -a -in chall3_3.enc\n\nApa yang terjadi jika kata sandi yang dimasukkan tidak sesuai?", options: ["File otomatis terhapus.", "File langsung berubah menjadi Base64.", "Proses dekripsi tidak menghasilkan data asli yang benar karena kunci yang digunakan tidak sesuai.", "File otomatis dikompresi menjadi TAR."], answer: "Proses dekripsi tidak menghasilkan data asli yang benar karena kunci yang digunakan tidak sesuai." },
+            { id: 13, pts: 10, text: "Apa perbedaan hasil dari kedua perintah berikut?\ntar -czvf backup_data.tar.gz data_lab/\ntar -cvf backup_data.tar data_lab/", options: ["Perintah pertama hanya menyalin file, sedangkan perintah kedua menghapus file asli.", "Perintah pertama membuat arsip TAR sekaligus mengompresinya menggunakan gzip, sedangkan perintah kedua hanya membuat arsip TAR tanpa kompresi gzip.", "Perintah pertama mengekstrak file, sedangkan perintah kedua membuat arsip.", "Keduanya menghasilkan arsip dengan proses yang sama."], answer: "Perintah pertama membuat arsip TAR sekaligus mengompresinya menggunakan gzip, sedangkan perintah kedua hanya membuat arsip TAR tanpa kompresi gzip." },
+            { id: 14, pts: 10, text: "Jika ingin melihat daftar isi arsip backup_data.tar.gz tanpa mengekstrak file di dalamnya, perintah yang tepat adalah", options: ["tar -xzvf backup_data.tar.gz", "tar -cvf backup_data.tar.gz", "tar -tvzf backup_data.tar.gz", "tar -czvf backup_data.tar.gz"], answer: "tar -tvzf backup_data.tar.gz" },
+            { id: 15, pts: 10, text: "Setelah arsip berhasil diekstrak, tetapi isi file masih dalam bentuk Base64 dan ciphertext, langkah selanjutnya agar data kembali ke bentuk aslinya adalah", options: ["Menghapus folder hasil ekstraksi dan membuat arsip baru.", "Mengubah seluruh file menjadi format ZIP.", "Melakukan decoding pada file yang di-encode dan dekripsi pada file yang dienkripsi.", "Menjalankan perintah stat pada seluruh file."], answer: "Melakukan decoding pada file yang di-encode dan dekripsi pada file yang dienkripsi." }
+        ];
+
         let isAdminLoggedIn = false;
         let currentStudent = {};
         let activeModule = "judul1";
@@ -458,6 +478,10 @@
                 activeQuestions = questionsJudul4;
                 activeTable = "pretest_responses_judul4";
                 document.getElementById("displayModuleTitle").textContent = "Judul 4: Shell Scripting & Monitoring";
+            } else if (activeModule === "judul5") {
+                activeQuestions = questionsJudul5;
+                activeTable = "pretest_responses_judul5";
+                document.getElementById("displayModuleTitle").textContent = "Judul 5: Analisis dan Manajemen File";
             } else {
                 activeQuestions = questionsJudul1;
                 activeTable = "pretest_responses";
@@ -492,7 +516,7 @@
                     <div class="space-y-2.5 pt-1">
                         ${q.options.map(opt => `
                             <label class="flex items-center gap-3 p-3.5 border border-slate-800 rounded-xl cursor-pointer hover:bg-slate-800/80 hover:border-indigo-500/50 transition text-xs font-semibold text-slate-300">
-                                <input type="radio" name="q_${q.id}" value="${opt}" onchange="updateProgress()" class="w-4 h-4 text-pink-500 focus:ring-pink-500 bg-slate-950 border-slate-700">
+                                <input type="radio" name="q_${q.id}" value="${opt.replace(/"/g, '&quot;')}" onchange="updateProgress()" class="w-4 h-4 text-pink-500 focus:ring-pink-500 bg-slate-950 border-slate-700">
                                 <span>${opt}</span>
                             </label>
                         `).join('')}
@@ -531,9 +555,7 @@
             let finalScore = rawScore;
             if (activeModule === "judul1") {
                 finalScore = Math.round((rawScore / 100) * 100);
-            } else if (activeModule === "judul2") {
-                finalScore = Math.round((rawScore / 150) * 100);
-            } else if (activeModule === "judul3" || activeModule === "judul4") {
+            } else {
                 finalScore = Math.round((rawScore / 150) * 100);
             }
 
@@ -570,6 +592,8 @@
                 activeTable = "pretest_responses_judul3";
             } else if (mod === "judul4") {
                 activeTable = "pretest_responses_judul4";
+            } else if (mod === "judul5") {
+                activeTable = "pretest_responses_judul5";
             } else {
                 activeTable = "pretest_responses";
             }
@@ -742,6 +766,7 @@
             if (activeTable === "pretest_responses_judul2") currentModLabel = "Judul_2";
             else if (activeTable === "pretest_responses_judul3") currentModLabel = "Judul_3";
             else if (activeTable === "pretest_responses_judul4") currentModLabel = "Judul_4";
+            else if (activeTable === "pretest_responses_judul5") currentModLabel = "Judul_5";
 
             const excelData = filteredResponses.map((r, idx) => ({
                 "No": idx + 1,
