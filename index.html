@@ -108,6 +108,7 @@
                                 <option value="judul3">Judul 3: Manajemen User, Group, dan Hak Akses</option>
                                 <option value="judul4">Judul 4: Shell Scripting Dasar & Monitoring Sistem</option>
                                 <option value="judul5">Judul 5: Analisis dan Manajemen File</option>
+                                <option value="judul6">Judul 6: Manajemen Layanan & Server Linux</option>
                             </select>
                         </div>
 
@@ -211,6 +212,7 @@
                         <option value="judul3">Modul: Judul 3 (Manajemen User & Akses)</option>
                         <option value="judul4">Modul: Judul 4 (Shell Scripting & Monitoring)</option>
                         <option value="judul5">Modul: Judul 5 (Analisis & Manajemen File)</option>
+                        <option value="judul6">Modul: Judul 6 (Manajemen Layanan & Server)</option>
                     </select>
                     <button onclick="fetchSupabaseResponses()" class="px-3.5 py-2.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
                         <i data-lucide="refresh-cw" class="w-4 h-4"></i> Refresh
@@ -354,7 +356,7 @@
         const SUPABASE_ANON_KEY = "sb_publishable_FlC3dc14UCCj7m6WzEXxRg_XxjHy9bp";
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // ==================== KUMPULAN SOAL JUDUL 1, 2, 3, 4, & 5 ====================
+        // ==================== KUMPULAN SOAL JUDUL 1, 2, 3, 4, 5, & 6 ====================
         const questionsJudul1 = [
             { id: 1, pts: 7, text: "Saat melakukan troubleshooting pada kernel panic di tahap awal inisiasi sistem, file krusial seperti vmlinuz-, initramfs-, serta peta konfigurasi bootloader umumnya dimuat di bawah hirarki direktori mana?", options: ["/lib", "/etc", "/bin", "/boot"], answer: "/boot" },
             { id: 2, pts: 7, text: "Direktori manakah yang menyimpan seluruh file konfigurasi sistem secara global dan script inisiasi pada sistem Linux?", options: ["/etc", "/var", "/opt", "/usr"], answer: "/etc" },
@@ -445,6 +447,24 @@
             { id: 15, pts: 10, text: "Setelah arsip berhasil diekstrak, tetapi isi file masih dalam bentuk Base64 dan ciphertext, langkah selanjutnya agar data kembali ke bentuk aslinya adalah", options: ["Menghapus folder hasil ekstraksi dan membuat arsip baru.", "Mengubah seluruh file menjadi format ZIP.", "Melakukan decoding pada file yang di-encode dan dekripsi pada file yang dienkripsi.", "Menjalankan perintah stat pada seluruh file."], answer: "Melakukan decoding pada file yang di-encode dan dekripsi pada file yang dienkripsi." }
         ];
 
+        const questionsJudul6 = [
+            { id: 1, pts: 10, text: "Program yang berjalan di latar belakang sistem Linux dan menyediakan fungsi tertentu disebut", options: ["Kernel", "Service", "Client", "Terminal", "Repository"], answer: "Service" },
+            { id: 2, pts: 10, text: "Seorang administrator ingin memastikan layanan Apache tetap aktif secara otomatis ketika komputer dinyalakan kembali. Pengaturan yang tepat berkaitan dengan konsep ....", options: ["Restart", "Stop", "Status", "Enable", "Disable"], answer: "Enable" },
+            { id: 3, pts: 10, text: "Dalam suatu jaringan, Web Server menerima permintaan dari browser pengguna. Apa yang dilakukan Web Server setelah menerima permintaan tersebut?", options: ["Menghapus seluruh data pengguna", "Mengelola alamat IP client", "Memproses permintaan dan mengirimkan halaman web kepada client", "Mengubah seluruh data menjadi format database", "Membatasi akses pengguna ke sistem operasi"], answer: "Memproses permintaan dan mengirimkan halaman web kepada client" },
+            { id: 4, pts: 10, text: "Perhatikan pernyataan berikut:\n• MySQL digunakan untuk mengelola basis data.\n• Apache digunakan untuk menyediakan halaman web.\n• Squid digunakan sebagai perantara komunikasi jaringan.\n\nBerdasarkan pernyataan tersebut, urutan jenis layanan yang tepat adalah ....", options: ["Web Server, Proxy Server, Database Server", "Database Server, Web Server, Proxy Server", "Proxy Server, Database Server, Web Server", "Web Server, Database Server, Proxy Server", "Database Server, Proxy Server, Web Server"], answer: "Web Server, Database Server, Proxy Server" },
+            { id: 5, pts: 10, text: "Dalam pengelolaan layanan Linux, perintah systemctl restart memiliki fungsi untuk ....", options: ["Memeriksa konfigurasi layanan", "Menghapus layanan dari sistem", "Menghentikan kemudian menjalankan kembali layanan", "Mengaktifkan layanan saat booting saja", "Menonaktifkan layanan secara permanen"], answer: "Menghentikan kemudian menjalankan kembali layanan" },
+            { id: 6, pts: 10, text: "Sebuah laboratorium ingin menyimpan data inventaris peralatan seperti ESP32, Arduino Uno, dan multimeter digital secara terstruktur. Jenis server yang paling sesuai untuk kebutuhan tersebut adalah ....", options: ["DNS Server", "File Server", "Proxy Server", "Database Server", "Web Server"], answer: "Database Server" },
+            { id: 7, pts: 10, text: "Pada MySQL, seorang administrator ingin menampilkan seluruh data yang tersimpan dalam suatu tabel. Perintah SQL yang digunakan adalah ....", options: ["INSERT INTO", "CREATE TABLE", "SELECT", "CREATE DATABASE", "USE"], answer: "SELECT" },
+            { id: 8, pts: 10, text: "DNS Record tipe MX memiliki fungsi untuk", options: ["Menentukan alamat IP suatu domain", "Menentukan server yang menangani pengiriman email untuk suatu domain", "Menentukan lokasi penyimpanan file web", "Mengatur jumlah pengguna database", "Menghubungkan client dengan Proxy Server"], answer: "Menentukan server yang menangani pengiriman email untuk suatu domain" },
+            { id: 9, pts: 10, text: "MySQL dan PostgreSQL sama-sama merupakan DBMS. Salah satu karakteristik PostgreSQL yang dibahas dalam modul adalah", options: ["Hanya digunakan untuk menyimpan halaman HTML", "Tidak mendukung pengelolaan data kompleks", "Memiliki dukungan terhadap data semi-struktur seperti JSON dan JSONB", "Hanya dapat digunakan sebagai Proxy Server", "Tidak mendukung transaksi basis data"], answer: "Memiliki dukungan terhadap data semi-struktur seperti JSON dan JSONB" },
+            { id: 10, pts: 10, text: "Seorang praktikan telah mengaktifkan Apache, tetapi halaman web yang ditampilkan masih menggunakan halaman lama. Kondisi tersebut dapat terjadi karena", options: ["Layanan Apache perlu dihentikan dan dihapus", "Berkas halaman web yang ditampilkan belum diperbarui sesuai perubahan yang diinginkan", "Database MySQL harus dihapus terlebih dahulu", "DNS Record MX belum dikonfigurasi", "Squid harus dinonaktifkan secara permanen"], answer: "Berkas halaman web yang ditampilkan belum diperbarui sesuai perubahan yang diinginkan" },
+            { id: 11, pts: 10, text: "Pada konfigurasi domain lokal, sebuah komputer menggunakan berkas /etc/hosts. Jika nama domain telah dipetakan ke alamat IP server, tetapi halaman web tidak dapat ditampilkan, kesimpulan yang paling tepat adalah", options: ["Resolusi nama domain pasti gagal", "Alamat IP tidak dapat digunakan dalam jaringan", "Permasalahan mungkin terdapat pada layanan Apache atau halaman web, bukan pada pemetaan nama domain", "MySQL harus dijalankan ulang agar domain dapat diterjemahkan", "Semua layanan Linux harus dihapus dan dipasang kembali"], answer: "Permasalahan mungkin terdapat pada layanan Apache atau halaman web, bukan pada pemetaan nama domain" },
+            { id: 12, pts: 10, text: "Seorang administrator menemukan bahwa layanan MySQL tidak berjalan, sehingga aplikasi tidak dapat mengambil data inventaris. Berdasarkan konsep manajemen layanan Linux, tindakan yang paling tepat adalah ..", options: ["Memeriksa kondisi layanan dan mengidentifikasi penyebab gangguan", "Menghapus seluruh database yang tersimpan", "Mengganti nama database menjadi nama layanan", "Menonaktifkan seluruh layanan server", "Menghapus direktori penyimpanan halaman web"], answer: "Memeriksa kondisi layanan dan mengidentifikasi penyebab gangguan" },
+            { id: 13, pts: 10, text: "Sebuah perusahaan menggunakan Proxy Server untuk mengatur akses internet karyawan. Namun, pengguna masih dapat mengakses website secara langsung tanpa melalui Proxy Server. Hal tersebut menunjukkan bahwa ....", options: ["Proxy Server telah menghapus seluruh data jaringan", "Seluruh permintaan internet otomatis melewati Proxy Server", "Pengaturan jaringan client belum diarahkan atau diwajibkan menggunakan Proxy Server", "DNS Server tidak dapat menerjemahkan nama domain", "Database Server mengalami kerusakan"], answer: "Pengaturan jaringan client belum diarahkan atau diwajibkan menggunakan Proxy Server" },
+            { id: 14, pts: 10, text: "Dalam pengelolaan MySQL, seorang administrator membuat pengguna khusus untuk mengakses database inventaris. Tujuan utama pemberian hak akses kepada pengguna tersebut adalah", options: ["Mempercepat proses booting sistem Linux", "Mengatur kewenangan pengguna dalam mengakses dan mengelola database", "Mengubah MySQL menjadi Web Server", "Menghubungkan nama domain dengan alamat IP", "Mengaktifkan layanan Apache secara otomatis"], answer: "Mengatur kewenangan pengguna dalam mengakses dan mengelola database" },
+            { id: 15, pts: 10, text: "Sebuah sistem laboratorium menggunakan Apache, MySQL, resolusi domain lokal, dan Squid. Ketika nama domain lokal berhasil diterjemahkan ke alamat IP, tetapi pengguna tidak dapat melihat halaman web, sedangkan koneksi melalui Proxy Server juga gagal, analisis yang paling tepat adalah", options: ["Seluruh layanan telah berjalan normal karena domain berhasil diterjemahkan", "MySQL merupakan satu-satunya layanan yang harus diperiksa", "Keberhasilan resolusi domain belum menjamin Apache dan Squid berfungsi, sehingga masing-masing layanan perlu diperiksa secara terpisah", "DNS harus dihapus karena tidak dapat menampilkan halaman web", "Apache dan Squid memiliki fungsi yang sama sehingga cukup menjalankan salah satunya"], answer: "Keberhasilan resolusi domain belum menjamin Apache dan Squid berfungsi, sehingga masing-masing layanan perlu diperiksa secara terpisah" }
+        ];
+
         let isAdminLoggedIn = false;
         let currentStudent = {};
         let activeModule = "judul1";
@@ -482,6 +502,10 @@
                 activeQuestions = questionsJudul5;
                 activeTable = "pretest_responses_judul5";
                 document.getElementById("displayModuleTitle").textContent = "Judul 5: Analisis dan Manajemen File";
+            } else if (activeModule === "judul6") {
+                activeQuestions = questionsJudul6;
+                activeTable = "pretest_responses_judul6";
+                document.getElementById("displayModuleTitle").textContent = "Judul 6: Manajemen Layanan & Server Linux";
             } else {
                 activeQuestions = questionsJudul1;
                 activeTable = "pretest_responses";
@@ -594,6 +618,8 @@
                 activeTable = "pretest_responses_judul4";
             } else if (mod === "judul5") {
                 activeTable = "pretest_responses_judul5";
+            } else if (mod === "judul6") {
+                activeTable = "pretest_responses_judul6";
             } else {
                 activeTable = "pretest_responses";
             }
@@ -767,6 +793,7 @@
             else if (activeTable === "pretest_responses_judul3") currentModLabel = "Judul_3";
             else if (activeTable === "pretest_responses_judul4") currentModLabel = "Judul_4";
             else if (activeTable === "pretest_responses_judul5") currentModLabel = "Judul_5";
+            else if (activeTable === "pretest_responses_judul6") currentModLabel = "Judul_6";
 
             const excelData = filteredResponses.map((r, idx) => ({
                 "No": idx + 1,
